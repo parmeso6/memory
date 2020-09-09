@@ -6,7 +6,6 @@ let openCards = [];
 function createDeck() {
     // create the cards
     fruits.forEach(fruit => {
-        console.log('fruit', fruit)
         $(".deck").append("<div class='cards " + fruit + "'></div>") &&
             $("." + fruit).clone().appendTo(".deck");
     })
@@ -85,7 +84,7 @@ function addCardListener() {
 function gameOver() {
     setTimeout(function () {
         alert('Fini !');
-    }, 1000);
+    }, 500);
 }
 
 

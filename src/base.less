@@ -20,21 +20,32 @@ body {
     border-radius: 5px;
     margin: 5px;
     background-color: slategray;
+    cursor: pointer;
 }
 
-.banana.show {
-    background-color: yellow;
+.show {
+    &.match {
+        border-color: green;
+    }
+    &.banana {
+        background-color: yellow;
+    }
+    &.orange {
+        background-color: orange;
+    }
+    &.lemon {
+        background-color: limegreen;
+    }
+    &.peach {
+        background-color:peachpuff;
+    }
 }
 
-.orange.show {
-    background-color: orange;
-}
 
-.lemon.show {
-    background-color: limegreen;
-}
 
-.peach.show {
-    background-color:peachpuff;
-}
+
+
+
+
+
 
