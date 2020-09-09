@@ -8,6 +8,5 @@
     "start": "node app.js"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {}
+  "license": "ISC"
 }
