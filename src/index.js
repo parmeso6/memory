@@ -3,6 +3,7 @@ const timetotal = 50;
 
 let match = 0;
 let openCards = [];
+let timeleft = timetotal;
 
 function createDeck() {
     // create the cards
@@ -83,8 +84,9 @@ function addCardListener() {
 
 function gameOver(success) {
     if (success) {
+        let score = timetotal - timeleft;
         setTimeout(function () {
-            alert('Gagnééééé');
+            alert('Gagnééééé en ' + score + ' secondes !');
         }, 500)
     } else {
         setTimeout(function () {
@@ -112,7 +114,6 @@ $(document).ready(function () {
     /*
     * Start countdown 
     */
-    let timeleft = timetotal;
     let countdown = setInterval(() => {
         // Animate countdown width in window
         let countdownWidth = (timeleft - 1) / timetotal * 100;
