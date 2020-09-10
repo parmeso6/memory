@@ -117,7 +117,7 @@ $(document).ready(function () {
     let countdown = setInterval(() => {
         // Animate countdown width in window
         let countdownWidth = (timeleft - 1) / timetotal * 100;
-        $(".countdown").animate({ width: countdownWidth + '%' }, 1200).html(timeleft)
+        $(".countdown").animate({ width: countdownWidth + '%' }, 1000).html(timeleft)
 
         // Game is over when time is finished
         if (timeleft <= 0) {
