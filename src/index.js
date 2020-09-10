@@ -38,13 +38,15 @@ function getFruit(str) {
 function addCardListener() {
     $(".deck").find('.cards').bind('click', function () {
         let $this = $(this);
-        // Do nothing if the card has already been flipped or matched    
-        if ($this.hasClass('active') || $this.hasClass('match')) { return true; }
+        // Do nothing if the card is active, matched or if there is already two  
+        if ($this.hasClass('active') || $this.hasClass('match') || openCards.length === 2) {
+            return true;
+        }
 
         // Flip the card otherwise
         $this.addClass('active show');
 
-        // Get the card type (fruit in future...)
+        // Get the card type 
         let fruit = getFruit($this[0].className);
         if (fruit) {
             openCards.push(fruit);
@@ -52,13 +54,14 @@ function addCardListener() {
             console.error("Carte non trouvée");
         }
 
-        // Compare card if there is already one selected
-        if (openCards.length > 1) {
+        // Compare card if there is two selected
+        if (openCards.length === 2) {
             if (openCards[0] === openCards[1]) {
                 // Add match class and then remove the active class
                 $(".deck").find('.active').addClass('match');
                 setTimeout(function () {
                     $(".deck").find('.active').removeClass('active');
+                    openCards = [];
                 }, 500);
 
                 // Increment the number of matchedPairs
@@ -67,17 +70,14 @@ function addCardListener() {
                 // If no match, both cards are flipped back
                 setTimeout(function () {
                     $(".deck").find('.active').removeClass('active show');
+                    openCards = [];
                 }, 1000);
             }
-            // Flush openCards
-            openCards = [];
         }
 
         if (fruits.length === match) {
             gameOver(true);
         }
-
-
     });
 };
 
@@ -127,7 +127,6 @@ $(document).ready(function () {
         // Time left decreases each second
         timeleft -= 1;
     }, 1000);
-
 
 });
 
