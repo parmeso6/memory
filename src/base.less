@@ -1,3 +1,4 @@
+/* ===GLOBAL=== */
 body {
     display: flex;
     flex-direction: column;
@@ -7,12 +8,31 @@ body {
 .deck {
     display:flex;
     width: 80%;
-    height:80%;
     flex-wrap: wrap;
     align-content: space-around;
     justify-content: space-around;
 }
 
+/* ===COUNTDOWN=== */
+.countdown-container {
+    display: flex;
+    width: 80%;
+    margin: 24px auto;
+    height: 24px;
+    background-color: grey;
+    border-radius: 5px;
+    .countdown {
+        height: 100%;
+        width: 100%;
+        background-color: red;
+        border-radius: 5px;
+        text-align: right;
+        line-height: 24px; /* Same as container height */
+        padding-right: 10px;
+    }
+}
+
+/* ===CARDS=== */
 .cards {
     height: 100px;
     width: 100px;
@@ -40,12 +60,3 @@ body {
         background-color:peachpuff;
     }
 }
-
-
-
-
-
-
-
-
-

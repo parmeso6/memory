@@ -1,4 +1,5 @@
 const fruits = ["banana", "peach", "orange", "lemon"]
+const timetotal = 50;
 
 let match = 0;
 let openCards = [];
@@ -9,7 +10,6 @@ function createDeck() {
         $(".deck").append("<div class='cards " + fruit + "'></div>") &&
             $("." + fruit).clone().appendTo(".deck");
     })
-
 
     // randomize cards in deck
     let parent = $(".deck");
@@ -24,7 +24,7 @@ function createDeck() {
 // Return false if no fruits have been found
 function getFruit(str) {
     const words = str.split(' ');
-    for (i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
         if (fruits.includes(words[i])) {
             return words[i];
         }
@@ -74,19 +74,28 @@ function addCardListener() {
         }
 
         if (fruits.length === match) {
-            gameOver();
+            gameOver(true);
         }
 
 
     });
 };
 
-function gameOver() {
+function gameOver(success) {
+    if (success) {
+        setTimeout(function () {
+            alert('Gagnééééé');
+        }, 500)
+    } else {
+        setTimeout(function () {
+            alert('Looooser');
+        }, 500)
+    }
+    // Reload the page
     setTimeout(function () {
-        alert('Fini !');
-    }, 500);
+        document.location.reload(true);
+    }, 1000)
 }
-
 
 $(document).ready(function () {
     /*
@@ -100,4 +109,25 @@ $(document).ready(function () {
     */
     addCardListener();
 
+    /*
+    * Start countdown 
+    */
+    let timeleft = timetotal;
+    let countdown = setInterval(() => {
+        // Animate countdown width in window
+        let countdownWidth = (timeleft - 1) / timetotal * 100;
+        $(".countdown").animate({ width: countdownWidth + '%' }, 1200).html(timeleft)
+
+        // Game is over when time is finished
+        if (timeleft <= 0) {
+            clearInterval(countdown);
+            gameOver();
+        }
+
+        // Time left decreases each second
+        timeleft -= 1;
+    }, 1000);
+
+
 });
+
