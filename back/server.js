@@ -1,18 +1,20 @@
 const http = require('http');
 const url = require('url');
+const ScoreController = require('./app/controller');
+const helpers = require('./app/helpers')
 
-module.exports = http.createServer((req, res) => {
+const hostname = '127.0.0.1';
+const port = 3000;
 
-    var service = require('./service.js');
+const server = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
-
     // GET Endpoint
     if (reqUrl.pathname == '/' && req.method === 'GET') {
         console.log('Request Type:' +
             req.method + ' Endpoint: ' +
             reqUrl.pathname);
 
-        service.sampleRequest(req, res);
+        ScoreController.getScores(res);
 
         // POST Endpoint
     } else if (reqUrl.pathname == '/' && req.method === 'POST') {
@@ -20,7 +22,9 @@ module.exports = http.createServer((req, res) => {
             req.method + ' Endpoint: ' +
             reqUrl.pathname);
 
-        service.testRequest(req, res);
+        helpers.getPostData(req).then((data) => {
+            ScoreController.addScore(req, res, data)
+        });
 
     } else {
         console.log('Request Type:' +
@@ -30,4 +34,8 @@ module.exports = http.createServer((req, res) => {
         service.invalidRequest(req, res);
 
     }
+})
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });

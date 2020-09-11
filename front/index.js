@@ -3,7 +3,8 @@ const timetotal = 50;
 
 let match = 0;
 let openCards = [];
-let timeleft = timetotal;
+let timeleft = 50;
+let startGame = false;
 
 function createDeck() {
     // create the cards
@@ -99,6 +100,13 @@ function gameOver(success) {
     }, 1000)
 }
 
+function getScores() {
+    $.get('http://localhost:3000/', function (data) {
+        console.log('data', data);
+        $('p').text(data.text);
+    });
+}
+
 $(document).ready(function () {
     /*
     * First step:
@@ -106,28 +114,36 @@ $(document).ready(function () {
     */
     createDeck();
 
-    /*
-    * Listen click events
-    */
-    addCardListener();
+    getScores();
 
     /*
-    * Start countdown 
+    * Start game on button click
     */
-    let countdown = setInterval(() => {
-        // Animate countdown width in window
-        let countdownWidth = (timeleft - 1) / timetotal * 100;
-        $(".countdown").animate({ width: countdownWidth + '%' }, 1000).html(timeleft)
+    $("#start").click(() => {
+        // Disabled the button after first click
+        $(this).prop('disabled', true);
 
-        // Game is over when time is finished
-        if (timeleft <= 0) {
-            clearInterval(countdown);
-            gameOver();
-        }
+        // Start countdown
 
-        // Time left decreases each second
-        timeleft -= 1;
-    }, 1000);
+        let countdown = setInterval(() => {
+            // Animate countdown width in window
+            let countdownWidth = (timeleft - 1) / timetotal * 100;
+            $(".countdown").animate({ width: countdownWidth + '%' }, 1000).html(timeleft)
+
+            // Game is over when time is finished
+            if (timeleft <= 0) {
+                clearInterval(countdown);
+                gameOver();
+            }
+
+            // Time left decreases each second
+            timeleft -= 1;
+        }, 1000)
+
+
+        // Listen cards click    
+        addCardListener();
+    });
 
 });
 
