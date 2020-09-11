@@ -21,15 +21,16 @@ body {
     height: 24px;
     background-color: grey;
     border-radius: 5px;
-    .countdown {
-        height: 100%;
-        width: 100%;
-        background-color: red;
-        border-radius: 5px;
-        text-align: right;
-        line-height: 24px; /* Same as container height */
-        padding-right: 10px;
-    }
+}
+
+.countdown-container  > .countdown {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    border-radius: 5px;
+    text-align: right;
+    line-height: 24px; /* Same as container height */
+    padding-right: 10px;
 }
 
 /* ===CARDS=== */
@@ -43,20 +44,19 @@ body {
     cursor: pointer;
 }
 
-.show {
-    &.match {
-        border-color: green;
-    }
-    &.banana {
-        background-color: yellow;
-    }
-    &.orange {
-        background-color: orange;
-    }
-    &.lemon {
-        background-color: limegreen;
-    }
-    &.peach {
-        background-color:peachpuff;
-    }
+.show.match {
+    border-color: green;
+}
+
+.show.banana {
+    background-color: yellow;
+}
+.show.orange {
+    background-color: orange;
+}
+.show.lemon {
+    background-color: limegreen;
+}
+.show.peach {
+    background-color:peachpuff;
 }
