@@ -31,6 +31,12 @@ exports.success = (res, data = null) => {
     }, null, 3));
 };
 
+exports.invalidRequest = (res) => {
+    addHeaders(res);
+    res.status = 404;
+    res.end();
+}
+
 const addHeaders = (res) => {
     return res.setHeader('Content-Type', 'application/json');
 }
@@ -43,17 +49,15 @@ const addHeaders = (res) => {
 exports.getPostData = (req) => {
     return new Promise((resolve, reject) => {
         try {
-            let body = '';
-            req.on('data', chunk => {
-                body += chunk.toString(); // convert Buffer to string
-            });
-
-            req.on('end', () => {
-                resolve(body);
+            let body = [];
+            req.on('data', (chunk) => {
+                body.push(chunk);
+            }).on('end', () => {
+                body = Buffer.concat(body).toString();
+                // at this point, `body` has the entire request body stored in it as a string
             });
         }
         catch (e) {
-
             console.log('err dans getPostData', err)
             reject(e);
         }

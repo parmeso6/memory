@@ -1,5 +1,6 @@
 const http = require('http');
 const url = require('url');
+
 const ScoreController = require('./app/controller');
 const helpers = require('./app/helpers')
 
@@ -14,7 +15,7 @@ const server = http.createServer((req, res) => {
             req.method + ' Endpoint: ' +
             reqUrl.pathname);
 
-        ScoreController.getScores(res);
+        ScoreController.getBestScores(res);
 
         // POST Endpoint
     } else if (reqUrl.pathname == '/' && req.method === 'POST') {
@@ -31,7 +32,7 @@ const server = http.createServer((req, res) => {
             req.method + ' Invalid Endpoint: ' +
             reqUrl.pathname);
 
-        service.invalidRequest(req, res);
+        helpers.invalidRequest(req, res);
 
     }
 })

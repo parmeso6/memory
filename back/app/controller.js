@@ -2,8 +2,19 @@ const helpers = require('./helpers.js');
 const db = require('./db.js');
 
 class ScoreController {
-    async getScores(res) {
-        const query = 'SELECT * FROM scores';
+    async getBestScores(res) {
+
+        /*
+        * Query:
+        * First, we select the table from which we want to retrieve records using the SELECT statement
+        * The DISTINCT statement removes duplicate values
+        * Then, we sort the rows
+        * Finaly, we use the FETCH clause to specify the number of rows we want to return.
+        */
+        const query =
+            `SELECT DISTINCT * FROM scores
+            ORDER BY time DESC
+            FETCH FIRST 3 ROWS ONLY`;
         db.query(query, (error, result) => {
             if (error) {
                 return helpers.error(res, error, 400)
