@@ -4,7 +4,6 @@ const timetotal = 50;
 let match = 0;
 let openCards = [];
 let timeleft = 50;
-let startGame = false;
 
 function createDeck() {
     // create the cards
@@ -86,9 +85,10 @@ function addCardListener() {
 function gameOver(success) {
     if (success) {
         let score = timetotal - timeleft;
-        setTimeout(function () {
-            alert('Gagnééééé en ' + score + ' secondes !');
-        }, 500)
+        $.post('http://localhost:3000/', '{ "time": ' + score.toString() + '}')
+            .done(
+                alert('Gagnééééé en ' + score + ' secondes !')
+            )
     } else {
         setTimeout(function () {
             alert('Looooser');
@@ -106,7 +106,6 @@ function gameOver(success) {
 function getScores() {
     $.get('http://localhost:3000/')
         .done(function (response) {
-            console.log(response)
             const items = response.data
                 .reduce((acc, item) => {
                     return acc + "<li>" + item.time + "</li>"
