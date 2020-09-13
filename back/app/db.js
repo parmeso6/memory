@@ -11,7 +11,6 @@ const pool = new Pool({
 
 pool.on('error', (err, client) => {
     console.error('unexpected error on idle client', err)
-    process.exit(-1)
 })
 
 pool.on('connect', () => {
@@ -20,7 +19,6 @@ pool.on('connect', () => {
 
 pool.on('remove', () => {
     console.log('client removed');
-    process.exit(0);
 });
 
 module.exports = {

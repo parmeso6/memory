@@ -11,7 +11,7 @@ function createDeck() {
     fruits.forEach(fruit => {
         $(".deck").append("<div class='cards " + fruit + "'></div>") &&
             $("." + fruit).clone().appendTo(".deck");
-    })
+    });
 
     // randomize cards in deck
     let parent = $(".deck");
@@ -96,15 +96,25 @@ function gameOver(success) {
     }
     // Reload the page
     setTimeout(function () {
-        document.location.reload(true);
+        document.location.reload();
     }, 1000)
 }
 
+/*
+* Load data from the server using a HTTP GET request
+*/
 function getScores() {
-    $.get('http://localhost:3000/', function (data) {
-        console.log('data', data);
-        $('p').text(data.text);
-    });
+    $.get('http://localhost:3000/')
+        .done(function (response) {
+            console.log(response)
+            const items = response.data
+                .reduce((acc, item) => {
+                    return acc + "<li>" + item.time + "</li>"
+                }, "");
+            $("<ul/>", {
+                html: items
+            }).appendTo("#scoreboard");
+        });
 }
 
 $(document).ready(function () {
@@ -114,6 +124,9 @@ $(document).ready(function () {
     */
     createDeck();
 
+    /*
+    * Fetch and display previous scores
+    */
     getScores();
 
     /*
@@ -124,7 +137,6 @@ $(document).ready(function () {
         $(this).prop('disabled', true);
 
         // Start countdown
-
         let countdown = setInterval(() => {
             // Animate countdown width in window
             let countdownWidth = (timeleft - 1) / timetotal * 100;
