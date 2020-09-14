@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
             body += chunk.toString(); // convert Buffer to string
         });
         req.on('end', () => {
-            body = JSON.parse(body);
+            body = JSON.parse(body); // Convert string to an object
             score_controller.addScore(res, body);
         });
 

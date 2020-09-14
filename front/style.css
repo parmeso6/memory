@@ -5,7 +5,7 @@ body {
     align-items: center;
 }
 
-.deck {
+#deck {
     display:flex;
     width: 80%;
     flex-wrap: wrap;
@@ -14,7 +14,7 @@ body {
 }
 
 /* ===COUNTDOWN=== */
-.countdown-container {
+#countdown-container {
     display: flex;
     width: 80%;
     margin: 24px auto;
@@ -23,7 +23,7 @@ body {
     border-radius: 5px;
 }
 
-.countdown-container  > .countdown {
+#countdown-container  > #countdown {
     height: 100%;
     width: 100%;
     background-color: red;
@@ -40,23 +40,67 @@ body {
     border: solid;
     border-radius: 5px;
     margin: 5px;
-    background-color: slategray;
     cursor: pointer;
+    background-color: gray;
 }
 
 .show.match {
     border-color: green;
 }
 
+.show.apple {
+    background-image: url(static/apple.png);
+}
+
+.show.apricot {
+    background-image: url(static/apricot.png);
+}
+
 .show.banana {
-    background-color: yellow;
+    background-image: url(static/banana.png);
 }
-.show.orange {
-    background-color: orange;
+
+.show.cherry {
+    background-image: url(static/cherry.png);
 }
+
+.show.grape {
+    background-image: url(static/grape.png);
+}
+
 .show.lemon {
-    background-color: limegreen;
+    background-image: url(static/lemon.png);
 }
+
+.show.lime {
+    background-image: url(static/lime.png);
+}
+
+.show.orange {
+    background-image: url(static/orange.png);
+}
+
 .show.peach {
-    background-color:peachpuff;
+    background-image: url(static/peach.png);
 }
+
+.show.plum {
+    background-image: url(static/plum.png);
+}
+
+.show.pomegranate {
+    background-image: url(static/pomegranate.png);
+}
+
+.show.raspberry {
+    background-image: url(static/raspberry.png);
+}
+
+.show.strawberry {
+    background-image: url(static/strawberry.png);
+}
+
+.show.watermelon {
+    background-image: url(static/watermelon.png);
+}
+

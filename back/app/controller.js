@@ -21,11 +21,7 @@ exports.getBestScores = (res) => {
         if (error) {
             return helpers.error(res, error, 400)
         }
-        if (result.rows < '1') {
-            return helpers.error(res, 'No score information found', 404)
-        } else {
-            return helpers.success(res, result.rows);
-        }
+        return helpers.success(res, result.rows);
     });
     ;
 }
