@@ -9,8 +9,6 @@ body {
     display:flex;
     width: 80%;
     flex-wrap: wrap;
-    align-content: space-around;
-    justify-content: space-around;
 }
 
 /* ===COUNTDOWN=== */
