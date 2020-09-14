@@ -1,13 +1,6 @@
-exports.validationError = (res, error = 'Data provided is not valid') => {
-    addHeaders(res);
-
-    res.statusCode = 422;
-
-    res.end(JSON.stringify({
-        status: 'fail',
-        error
-    }, null, 3));
-};
+/*
+* Helpers build HTTP responses
+*/
 
 exports.error = (res, error = 'An unknown error occurred', statusCode = 500) => {
     addHeaders(res);

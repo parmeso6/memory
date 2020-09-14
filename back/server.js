@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 
-const score_controller = require('./app/controller');
+const ScoreController = require('./app/controller');
 const helpers = require('./app/helpers')
 
 const hostname = '127.0.0.1';
@@ -11,23 +11,13 @@ const server = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
     // GET Endpoint
     if (reqUrl.pathname == '/best_scores' && req.method === 'GET') {
-        score_controller.getBestScores(res);
+        ScoreController.getBestScores(res);
 
         // POST Endpoint
     } else if (reqUrl.pathname == '/new_score' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString(); // convert Buffer to string
-        });
-        req.on('end', () => {
-            body = JSON.parse(body); // Convert string to an object
-            score_controller.addScore(res, body);
-        });
-
-
+        ScoreController.addScore(req, res);
     } else {
         helpers.invalidRequest(res);
-
     }
 })
 

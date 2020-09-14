@@ -1,51 +1,42 @@
-const helpers = require('./helpers.js');
-const db = require('./db.js');
-
 /*
-* Get values from db and return
+* Controller manage all the logic of validating query parameters, 
+* and send responses with the correct statusCodes.
 */
-exports.getBestScores = (res) => {
 
-    /*
-    * Query:
-    * First, we select the table from which we want to retrieve records using the SELECT statement
-    * The DISTINCT statement removes duplicate values
-    * Then, we sort the rows
-    * Finaly, we use the FETCH clause to specify the number of rows we want to return.
-    */
-    const query =
-        `SELECT DISTINCT * FROM scores
-            ORDER BY time ASC
-            FETCH FIRST 3 ROWS ONLY`;
-    db.query(query, (error, result) => {
-        if (error) {
-            return helpers.error(res, error, 400)
-        }
-        return helpers.success(res, result.rows);
-    });
-    ;
+const helpers = require('./helpers');
+const db = require('./db');
+const ScoreService = require('./service')
+
+exports.getBestScores = async (res) => {
+    try {
+        const scores = await ScoreService.getBestScores();
+        return helpers.success(res, scores);
+    } catch (error) {
+        return helpers.error(res, error, 400)
+    }
 }
 
-/*
-* Check if the value is valid
-* Insert it
-* Return success if so
-*/
-exports.addScore = (res, body) => {
-    let time = parseInt(body.time, 10);
-
-    // If time is not an integer, send an error
-    if (!Number.isInteger(time)) {
-        return helpers.validationError(res);
+exports.addScore = async (req, res) => {
+    try {
+        let body = await getBody(req);
+        await ScoreService.addScore(body.time);
+        return helpers.success(res)
+    } catch (error) {
+        return helpers.error(res, error.message)
     }
+}
 
-    // Simple insertion
-    const query = 'INSERT INTO scores (time) VALUES (' + time + ')';
-    db.query(query, (error, result) => {
-        if (error) {
-            return helpers.error(res, error, 400)
-        }
-        return helpers.success(res);
-    });
-    ;
-};
+const getBody = async (req) => {
+    // Return new promise
+    return new Promise(function (resolve) {
+        let body = '';
+        // Do async job
+        req.on('data', chunk => {
+            body += chunk.toString(); // convert Buffer to string
+        });
+        req.on('end', () => {
+            body = JSON.parse(body); // Convert string to an object
+            resolve(body);
+        });
+    })
+}
