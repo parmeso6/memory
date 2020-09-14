@@ -21,31 +21,60 @@ Memory requires the following to run:
 [postgresql]: https://www.postgresql.org/download/
 [http-server]: https://www.npmjs.com/package/http-server
 
-## Run
+## Database setup
 
 Check that PostgreSQL is running
 
  ```bash
-psql -V
+~$ psql -V
 ```
 
-If your server is a Linux, input the command service postgresql status. Be sure to exit properly by typing CTRL + C when you’re finished.
+For most systems, the default Postgres user is postgres and a password is not required for authentication. Thus, to add a password, we must first login and connect as the postgres user.
+
+```bash
+~$ sudo -u postgres psql
+```
+
+With a connection now established to Postgres at the psql prompt, issue the ALTER USER command to change the password for the postgres user:
+
+```bash
+postgres=# ALTER USER postgres PASSWORD '1234';
+```
+
+If successful, Postgres will output a confirmation of ALTER ROLE.
+
+Then, create the database 'memory'
+
+```bash
+postgres=# CREATE DATABASE memory;
+```
+If successful, Postgres will output a confirmation of CREATE DATABASE.
+
+Finally, exit the psql client by using the \q command.
+
+## Run
 
 Install dependencies
 
  ```bash
- cd back & npm install
+ ~/memory$ cd back && npm install
+ ```
+
+Create the table
+
+ ```bash
+ ~/memory/back$ node setup
  ```
 
 Start the NodeJS server
 
  ```bash
-node app.js
+~/memory/back$ node server
  ```
 
 Start the front in another terminal.
 I use http-server in order to prevent any CORS problems
 
  ```bash
- cd front & http-server -o --cors
+ ~/memory$ cd front && http-server -o --cors
  ```
